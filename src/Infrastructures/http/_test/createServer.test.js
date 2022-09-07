@@ -60,7 +60,9 @@ describe('HTTP server', () => {
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(400);
         expect(responseJson.status).toEqual('fail');
-        expect(responseJson.message).toEqual('tidak dapat membuat user baru karena properti yang dibutuhkan tidak ada');
+        expect(responseJson.message).toEqual(
+          'tidak dapat membuat user baru karena properti yang dibutuhkan tidak ada',
+        );
       });
 
       it('should response 400 when request payload not meet data type specification', async () => {
@@ -83,13 +85,16 @@ describe('HTTP server', () => {
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(400);
         expect(responseJson.status).toEqual('fail');
-        expect(responseJson.message).toEqual('tidak dapat membuat user baru karena tipe data tidak sesuai');
+        expect(responseJson.message).toEqual(
+          'tidak dapat membuat user baru karena tipe data tidak sesuai',
+        );
       });
 
       it('should response 400 when username more than 50 character', async () => {
         // Arrange
         const requestPayload = {
-          username: 'dicodingindonesiadicodingindonesiadicodingindonesiadicoding',
+          username:
+            'dicodingindonesiadicodingindonesiadicodingindonesiadicoding',
           password: 'secret',
           fullname: 'Dicoding Indonesia',
         };
@@ -106,7 +111,9 @@ describe('HTTP server', () => {
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(400);
         expect(responseJson.status).toEqual('fail');
-        expect(responseJson.message).toEqual('tidak dapat membuat user baru karena karakter username melebihi batas limit');
+        expect(responseJson.message).toEqual(
+          'tidak dapat membuat user baru karena karakter username melebihi batas limit',
+        );
       });
 
       it('should response 400 when username contain restricted character', async () => {
@@ -129,7 +136,9 @@ describe('HTTP server', () => {
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(400);
         expect(responseJson.status).toEqual('fail');
-        expect(responseJson.message).toEqual('tidak dapat membuat user baru karena username mengandung karakter terlarang');
+        expect(responseJson.message).toEqual(
+          'tidak dapat membuat user baru karena username mengandung karakter terlarang',
+        );
       });
 
       it('should response 400 when username unavailable', async () => {
@@ -176,7 +185,9 @@ describe('HTTP server', () => {
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(500);
         expect(responseJson.status).toEqual('error');
-        expect(responseJson.message).toEqual('terjadi kegagalan pada server kami');
+        expect(responseJson.message).toEqual(
+          'terjadi kegagalan pada server kami',
+        );
       });
 
       it('should response 404 when request unregistered route', async () => {
@@ -191,6 +202,22 @@ describe('HTTP server', () => {
 
         // Assert
         expect(response.statusCode).toEqual(404);
+      });
+    });
+
+    describe('when GET /', () => {
+      it('should return 200 and hello world', async () => {
+        // Arrange
+        const server = await createServer({});
+        // Action
+        const response = await server.inject({
+          method: 'GET',
+          url: '/',
+        });
+        // Assert
+        const responseJson = JSON.parse(response.payload);
+        expect(response.statusCode).toEqual(200);
+        expect(responseJson.value).toEqual('Hello world!');
       });
     });
   });
@@ -217,7 +244,10 @@ describe('HTTP server', () => {
         const response = await server.inject({
           method: 'POST',
           url: '/authentications',
-          payload: { username: requestPayload.username, password: requestPayload.password },
+          payload: {
+            username: requestPayload.username,
+            password: requestPayload.password,
+          },
         });
 
         // Assert
@@ -242,7 +272,10 @@ describe('HTTP server', () => {
         const response = await server.inject({
           method: 'POST',
           url: '/authentications',
-          payload: { username: requestPayload.username, password: requestPayload.password },
+          payload: {
+            username: requestPayload.username,
+            password: requestPayload.password,
+          },
         });
 
         // Assert
@@ -273,7 +306,10 @@ describe('HTTP server', () => {
         const authResponse = await server.inject({
           method: 'POST',
           url: '/authentications',
-          payload: { username: requestPayload.username, password: requestPayload.password },
+          payload: {
+            username: requestPayload.username,
+            password: requestPayload.password,
+          },
         });
 
         const postResponse = JSON.parse(authResponse.payload);
@@ -314,7 +350,10 @@ describe('HTTP server', () => {
         const authResponse = await server.inject({
           method: 'POST',
           url: '/authentications',
-          payload: { username: requestPayload.username, password: requestPayload.password },
+          payload: {
+            username: requestPayload.username,
+            password: requestPayload.password,
+          },
         });
 
         const postResponse = JSON.parse(authResponse.payload);
