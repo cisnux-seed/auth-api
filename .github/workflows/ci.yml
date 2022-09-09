@@ -24,7 +24,7 @@ jobs:
       run: |
         npm install
         npm run migrate up
-        npm run test
+        npm run test:watch
       env:
         CI: true
         PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
@@ -39,3 +39,5 @@ jobs:
         PGPORT: ${{ secrets.PGPORT_TEST }}
         ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
         REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+    - name: upload coverage to codecov
+      uses: codecov/codecov-action@v2
